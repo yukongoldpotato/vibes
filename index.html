@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Large Type+</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bungee&family=Pacifico&family=Permanent+Marker&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0D0D0D;
+    }
+
+    /* ===== DISPLAY ===== */
+    #display {
+      position: relative;
+      width: 100vw; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 3vh 3vw;
+      cursor: pointer;
+      transition: background-color 0.4s ease;
+    }
+
+    #display.dimmed::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.3);
+      pointer-events: none;
+    }
+
+    #display-text {
+      width: 94vw;
+      max-height: 94vh;
+      text-align: center;
+      line-height: 1.1;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+      user-select: none;
+    }
+
+    #display-text.placeholder {
+      opacity: 0.2;
+      font-style: italic;
+      color: #fff;
+      font-family: 'Comic Sans MS', cursive;
+    }
+
+    /* WordArt effect */
+    #display-text.effect-wordart {
+      background: linear-gradient(
+        90deg,
+        #ff0000 0%, #ff8800 15%, #ffff00 30%, #00ff00 45%,
+        #0088ff 60%, #8800ff 75%, #ff0088 90%, #ff0000 100%
+      );
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: wordart-shift 4s linear infinite;
+      font-weight: 900;
+      filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.35))
+              drop-shadow(6px 6px 0 rgba(0,0,0,0.15));
+    }
+
+    @keyframes wordart-shift {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    /* Neon effect */
+    #display-text.effect-neon {
+      text-shadow:
+        0 0 7px var(--color, #0ff),
+        0 0 10px var(--color, #0ff),
+        0 0 21px var(--color, #0ff),
+        0 0 42px var(--neon-glow, #0ff),
+        0 0 82px var(--neon-glow, #0ff),
+        0 0 92px var(--neon-glow, #0ff);
+      animation: neon-flicker 3s infinite alternate;
+    }
+
+    @keyframes neon-flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.85; }
+    }
+
+    /* Shadow effect */
+    #display-text.effect-shadow {
+      text-shadow:
+        3px 3px 0 rgba(0,0,0,0.3),
+        6px 6px 0 rgba(0,0,0,0.15),
+        9px 9px 0 rgba(0,0,0,0.08);
+      font-weight: 900;
+    }
+
+    /* Outline effect */
+    #display-text.effect-outline {
+      -webkit-text-stroke: 2px currentColor;
+      color: transparent !important;
+    }
+
+    /* ===== TEXT ANIMATIONS ===== */
+    #display-text.anim-bounce { animation: txt-bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+    #display-text.anim-pulse  { animation: txt-pulse 1.5s ease-in-out infinite; }
+    #display-text.anim-wiggle { animation: txt-wiggle 0.4s ease both; }
+    #display-text.anim-drop   { animation: txt-drop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    #display-text.anim-spin   { animation: txt-spin 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+    #display-text.anim-rubber  { animation: txt-rubber 0.8s ease both; }
+
+    @keyframes txt-bounce {
+      0%   { transform: scale(0.3); opacity: 0; }
+      60%  { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    @keyframes txt-pulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.04); }
+    }
+    @keyframes txt-wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      20%  { transform: rotate(-3deg); }
+      40%  { transform: rotate(3deg); }
+      60%  { transform: rotate(-2deg); }
+      80%  { transform: rotate(2deg); }
+    }
+    @keyframes txt-drop {
+      0%   { transform: translateY(-80px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes txt-spin {
+      0%   { transform: rotate(-15deg) scale(0.5); opacity: 0; }
+      100% { transform: rotate(0deg) scale(1); opacity: 1; }
+    }
+    @keyframes txt-rubber {
+      0%   { transform: scaleX(1) scaleY(1); }
+      30%  { transform: scaleX(1.25) scaleY(0.75); }
+      40%  { transform: scaleX(0.75) scaleY(1.25); }
+      50%  { transform: scaleX(1.15) scaleY(0.85); }
+      65%  { transform: scaleX(0.95) scaleY(1.05); }
+      75%  { transform: scaleX(1.05) scaleY(0.95); }
+      100% { transform: scaleX(1) scaleY(1); }
+    }
+
+    /* ===== FLOATING CRITTERS ===== */
+    .critter {
+      position: fixed;
+      pointer-events: none;
+      z-index: 50;
+      will-change: transform;
+    }
+    .critter.emoji {
+      font-size: var(--size, 60px);
+      line-height: 1;
+    }
+    .critter.img {
+      width: var(--size, 100px);
+      height: var(--size, 100px);
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    /* Doge text */
+    .critter.doge-text {
+      font-family: 'Comic Sans MS', cursive;
+      font-weight: bold;
+      font-size: var(--size, 28px);
+      line-height: 1;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    }
+
+    /* Animation types */
+    .critter.anim-zoom    { animation: chaos-zoom var(--dur) linear forwards; }
+    .critter.anim-spiral  { animation: chaos-spiral var(--dur) ease-in-out forwards; }
+    .critter.anim-shake   { animation: chaos-shake var(--dur) linear forwards; }
+    .critter.anim-yeet    { animation: chaos-yeet var(--dur) cubic-bezier(0.2, 0, 0, 1) forwards; }
+    .critter.anim-bounce2 { animation: chaos-bounce var(--dur) ease-in-out forwards; }
+    .critter.anim-pinball { animation: chaos-pinball var(--dur) linear forwards; }
+    .critter.anim-tornado { animation: chaos-tornado var(--dur) ease-in-out forwards; }
+
+    @keyframes chaos-zoom {
+      0%   { left: var(--sx); top: var(--sy); transform: scale(0) rotate(0deg); opacity: 0; }
+      5%   { transform: scale(3) rotate(60deg); opacity: 1; }
+      30%  { transform: scale(1.5) rotate(360deg); opacity: 1; }
+      60%  { transform: scale(4) rotate(900deg); opacity: 0.8; }
+      100% { left: var(--ex); top: var(--ey); transform: scale(5) rotate(1440deg); opacity: 0; }
+    }
+    @keyframes chaos-spiral {
+      0%   { left: var(--sx); top: var(--sy); transform: scale(0) rotate(0); opacity: 0; }
+      8%   { transform: scale(2.5) rotate(180deg); opacity: 1; }
+      20%  { transform: scale(1) rotate(540deg) translate(150px, -100px); }
+      35%  { transform: scale(3) rotate(900deg) translate(-200px, 80px); }
+      50%  { transform: scale(0.8) rotate(1260deg) translate(100px, -150px); }
+      65%  { transform: scale(2.5) rotate(1620deg) translate(-100px, 120px); }
+      80%  { transform: scale(1.5) rotate(1980deg) translate(80px, -60px); }
+      100% { left: var(--ex); top: var(--ey); transform: scale(0) rotate(2520deg); opacity: 0; }
+    }
+    @keyframes chaos-shake {
+      0%   { left: var(--sx); top: var(--sy); transform: scale(0); opacity: 0; }
+      3%   { transform: scale(2); opacity: 1; }
+      8%   { transform: scale(2) translateX(-60px) rotate(-25deg); }
+      12%  { transform: scale(2.5) translateX(60px) rotate(25deg); }
+      16%  { transform: scale(1.8) translateX(-50px) rotate(-20deg); }
+      20%  { transform: scale(3) translateX(50px) rotate(20deg); }
+      24%  { transform: scale(2) translateX(-40px) rotate(-15deg); }
+      28%  { transform: scale(2.8) translateX(40px) rotate(15deg); }
+      35%  { transform: scale(2.2) translateX(-30px) rotate(-30deg); }
+      42%  { transform: scale(3.2) translateX(30px) rotate(30deg); }
+      55%  { transform: scale(2) rotate(0); }
+      85%  { opacity: 1; }
+      100% { left: var(--ex); top: var(--ey); transform: scale(0.5) rotate(var(--rot)); opacity: 0; }
+    }
+    @keyframes chaos-yeet {
+      0%   { left: var(--sx); top: var(--sy); transform: scale(0.5) rotate(0); opacity: 1; }
+      10%  { transform: scale(4) rotate(-40deg); opacity: 1; }
+      100% { left: var(--ex); top: var(--ey); transform: scale(6) rotate(var(--rot)); opacity: 0; }
+    }
+    @keyframes chaos-bounce {
+      0%   { left: var(--sx); top: var(--sy); transform: scale(0) rotate(0); opacity: 0; }
+      8%   { transform: scale(3) rotate(30deg); opacity: 1; }
+      18%  { transform: scale(1) rotate(-30deg) translateY(-200px); }
+      28%  { transform: scale(2.5) rotate(40deg) translateY(0); }
+      38%  { transform: scale(0.8) rotate(-20deg) translateY(-150px); }
+      48%  { transform: scale(3) rotate(30deg) translateY(0); }
+      58%  { transform: scale(1.5) rotate(-15deg) translateY(-100px); }
+      68%  { transform: scale(2.5) rotate(20deg) translateY(0); }
+      80%  { transform: scale(2) rotate(-10deg) translateY(-60px); opacity: 0.8; }
+      100% { left: var(--ex); top: var(--ey); transform: scale(0) rotate(var(--rot)); opacity: 0; }
+    }
+    @keyframes chaos-pinball {
+      0%   { left: var(--sx); top: var(--sy); transform: scale(0) rotate(0); opacity: 0; }
+      5%   { transform: scale(2.5); opacity: 1; }
+      15%  { transform: scale(2.5) translate(200px, -200px) rotate(180deg); }
+      25%  { transform: scale(3) translate(-150px, 100px) rotate(360deg); }
+      35%  { transform: scale(2) translate(250px, 150px) rotate(540deg); }
+      45%  { transform: scale(3.5) translate(-200px, -100px) rotate(720deg); }
+      55%  { transform: scale(1.5) translate(100px, 200px) rotate(900deg); }
+      65%  { transform: scale(3) translate(-250px, 50px) rotate(1080deg); }
+      75%  { transform: scale(2) translate(150px, -150px) rotate(1260deg); }
+      85%  { transform: scale(2.5) translate(-100px, 100px) rotate(1440deg); opacity: 0.7; }
+      100% { left: var(--ex); top: var(--ey); transform: scale(0) rotate(1800deg); opacity: 0; }
+    }
+    @keyframes chaos-tornado {
+      0%   { left: var(--sx); top: var(--sy); transform: scale(0) rotate(0) translateY(0); opacity: 0; }
+      5%   { transform: scale(3) rotate(0); opacity: 1; }
+      15%  { transform: scale(2) rotate(360deg) translateX(120px) translateY(-80px); }
+      25%  { transform: scale(4) rotate(720deg) translateX(-120px) translateY(-160px); }
+      35%  { transform: scale(1.5) rotate(1080deg) translateX(80px) translateY(-240px); }
+      45%  { transform: scale(3.5) rotate(1440deg) translateX(-80px) translateY(-320px); }
+      55%  { transform: scale(2) rotate(1800deg) translateX(60px) translateY(-200px); }
+      65%  { transform: scale(3) rotate(2160deg) translateX(-60px) translateY(-280px); }
+      80%  { transform: scale(2.5) rotate(2520deg) translateX(0) translateY(-350px); opacity: 0.6; }
+      100% { left: var(--ex); top: var(--ey); transform: scale(0) rotate(3240deg) translateY(-500px); opacity: 0; }
+    }
+
+    /* Hidden input captures all typing */
+    #hidden-input {
+      position: fixed;
+      top: -9999px; left: -9999px;
+      opacity: 0;
+      width: 1px; height: 1px;
+    }
+
+    /* Cursor blink */
+    #display-text .cursor {
+      display: inline-block;
+      width: 3px;
+      background: currentColor;
+      opacity: 0.6;
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+    #display-text.placeholder .cursor { display: none; }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Hint at bottom */
+    #hint {
+      position: fixed; bottom: 12px;
+      left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.1);
+      font-size: 10px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0.01s !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="display">
+    <div id="display-text" class="placeholder">Just start typing...<span class="cursor">&nbsp;</span></div>
+  </div>
+  <textarea id="hidden-input" autocomplete="off" autofocus></textarea>
+  <div id="hint">Type to write &middot; Tab shuffle &middot; Esc clear</div>
+
+<script>
+/* ===== CONSTANTS ===== */
+const FONTS = [
+  '"Comic Sans MS", cursive',
+  'Impact, sans-serif',
+  'Papyrus, fantasy',
+  '"Brush Script MT", cursive',
+  '"Courier New", monospace',
+  'Georgia, serif',
+  '"Arial Black", sans-serif',
+  '"Trebuchet MS", sans-serif',
+  'Pacifico, cursive',
+  'Bangers, cursive',
+  '"Permanent Marker", cursive',
+  '"Press Start 2P", monospace',
+  'Bungee, cursive',
+];
+
+const EFFECTS = ['none', 'none', 'none', 'wordart', 'neon', 'shadow', 'outline'];
+
+const TEXT_ANIMS = ['anim-bounce', 'anim-pulse', 'anim-wiggle', 'anim-drop', 'anim-spin', 'anim-rubber'];
+
+const CRITTER_EMOJI = [
+  '🐱','🐶','🐸','🦊','🐻','🐼','🐨','🐯','🦁','🐮',
+  '🐷','🐧','🐔','🦄','🐝','🦋','🐌','🐙','🦀','🐠',
+  '😎','🤩','🥳','👻','👾','🤖','💥','🌟','🌈','🔥',
+  '💀','🧙','🤡','💯','🍕','🍭','🎉','🎊','🚀','🎸',
+];
+
+const DOGE_WORDS = [
+  'wow','such type','very text','much font','so color',
+  'amaze','how shuffle','such random','very chaos','wow',
+  'so meme','much wow','many letters','plz','very large',
+  'such screen','omg','so big','very comic sans','many pixel',
+  'wow again','pls','such amaze','very doge','much internet',
+];
+
+const DOGE_COLORS = [
+  '#FF6B6B','#FFD93D','#6BCB77','#4D96FF','#FF6BD6',
+  '#FF4500','#00FF7F','#FFD700','#FF1493','#00CED1',
+  '#FFA500','#ADFF2F','#FF69B4','#7B68EE','#F0E68C',
+];
+
+const CHAOS_ANIMS = ['anim-zoom','anim-spiral','anim-shake','anim-yeet','anim-bounce2','anim-pinball','anim-tornado'];
+
+const CAT_URLS = [
+  'https://cdn2.thecatapi.com/images/',
+];
+
+const MEME_IMGS = [
+  'https://http.cat/100','https://http.cat/200','https://http.cat/201',
+  'https://http.cat/204','https://http.cat/301','https://http.cat/400',
+  'https://http.cat/403','https://http.cat/404','https://http.cat/418',
+  'https://http.cat/500','https://http.cat/503',
+  'https://http.dog/100.jpg','https://http.dog/200.jpg','https://http.dog/201.jpg',
+  'https://http.dog/204.jpg','https://http.dog/301.jpg','https://http.dog/400.jpg',
+  'https://http.dog/403.jpg','https://http.dog/404.jpg','https://http.dog/418.jpg',
+  'https://http.dog/500.jpg','https://http.dog/503.jpg',
+];
+
+const VIBRANT_COLORS = [
+  '#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7',
+  '#DDA0DD','#F7DC6F','#BB8FCE','#85C1E9','#FF69B4',
+  '#00FF7F','#FFD700','#FF4500','#7B68EE','#FF1493',
+  '#00CED1','#FFA07A','#98FB98','#DA70D6','#F0E68C',
+  '#FFFFFF','#E0E0E0','#FFF8DC','#F5F5DC',
+];
+
+const NEON_COLORS = ['#0ff','#f0f','#0f0','#ff0','#f60','#60f','#f06'];
+
+const DARK_BGS = [
+  '#1a1a2e','#16213e','#0f3460','#533483','#2c3e50',
+  '#1B1B2F','#162447','#1F4068','#0D0D0D','#2D132C',
+  '#391463','#0B0B45','#1A0033','#0a192f','#1c1c3c',
+  '#000000','#0a0a0a','#111111',
+];
+
+/* ===== STATE ===== */
+let state = { text: '', font: '', color: '', bg: '', effect: 'none' };
+
+/* ===== DOM ===== */
+const display     = document.getElementById('display');
+const displayText = document.getElementById('display-text');
+const hiddenInput = document.getElementById('hidden-input');
+const cursor      = displayText.querySelector('.cursor');
+
+/* ===== HELPERS ===== */
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+/* ===== SOUND ENGINE (Web Audio API) ===== */
+let audioCtx = null;
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function sndClick() {
+  const ctx = getCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(800 + Math.random() * 600, ctx.currentTime);
+  gain.gain.setValueAtTime(0.08, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 0.06);
+}
+
+function sndShuffle() {
+  const ctx = getCtx();
+  // swoosh noise
+  const bufSize = ctx.sampleRate * 0.3;
+  const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufSize);
+  const src = ctx.createBufferSource();
+  src.buffer = buf;
+  const filt = ctx.createBiquadFilter();
+  filt.type = 'bandpass';
+  filt.frequency.setValueAtTime(1000, ctx.currentTime);
+  filt.frequency.exponentialRampToValueAtTime(4000, ctx.currentTime + 0.15);
+  filt.Q.value = 2;
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.2, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+  src.connect(filt); filt.connect(gain); gain.connect(ctx.destination);
+  src.start(ctx.currentTime);
+  // bonus sparkle
+  for (let i = 0; i < 4; i++) {
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'sine';
+    const t = ctx.currentTime + i * 0.06;
+    o.frequency.setValueAtTime(1200 + i * 400 + Math.random() * 300, t);
+    g.gain.setValueAtTime(0.06, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+    o.start(t); o.stop(t + 0.1);
+  }
+}
+
+function sndPop() {
+  const ctx = getCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = pick(['sine', 'triangle', 'square']);
+  const freq = 200 + Math.random() * 1200;
+  osc.frequency.setValueAtTime(freq, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(freq * 0.3, ctx.currentTime + 0.15);
+  gain.gain.setValueAtTime(0.07, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 0.15);
+}
+
+function sndClear() {
+  const ctx = getCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(600, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.3);
+  gain.gain.setValueAtTime(0.12, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 0.3);
+}
+function utoa(s) { return btoa(unescape(encodeURIComponent(s))); }
+function atou(s) { return decodeURIComponent(escape(atob(s))); }
+
+/* ===== URL STATE ===== */
+function saveToURL() {
+  const p = new URLSearchParams();
+  if (state.text) p.set('t', utoa(state.text));
+  p.set('f', FONTS.indexOf(state.font));
+  p.set('c', state.color.replace('#', ''));
+  p.set('b', state.bg.replace('#', ''));
+  if (state.effect !== 'none') p.set('e', state.effect);
+  history.replaceState(null, '', '#' + p.toString());
+}
+
+function loadFromURL() {
+  const hash = location.hash.slice(1);
+  if (!hash) { randomizeStyle(); return; }
+  try {
+    const p = new URLSearchParams(hash);
+    if (p.has('t')) state.text = atou(p.get('t'));
+    if (p.has('f')) state.font = FONTS[parseInt(p.get('f'))] || pick(FONTS);
+    if (p.has('c')) state.color = '#' + p.get('c');
+    if (p.has('b')) state.bg = '#' + p.get('b');
+    if (p.has('e')) state.effect = p.get('e');
+  } catch (e) { console.warn('URL parse error:', e); randomizeStyle(); }
+  if (!state.font) randomizeStyle();
+}
+
+/* ===== RANDOMIZE ===== */
+function hexToRgb(hex) {
+  hex = hex.replace('#', '');
+  if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  return [parseInt(hex.slice(0,2),16), parseInt(hex.slice(2,4),16), parseInt(hex.slice(4,6),16)];
+}
+
+function luminance(r, g, b) {
+  const [rs, gs, bs] = [r, g, b].map(c => {
+    c /= 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+}
+
+function contrastRatio(c1, c2) {
+  const [r1,g1,b1] = hexToRgb(c1);
+  const [r2,g2,b2] = hexToRgb(c2);
+  const l1 = luminance(r1,g1,b1);
+  const l2 = luminance(r2,g2,b2);
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function randomizeStyle() {
+  state.font = pick(FONTS);
+  state.effect = pick(EFFECTS);
+  state.bg = pick(DARK_BGS);
+  const palette = state.effect === 'neon' ? NEON_COLORS : VIBRANT_COLORS;
+  let attempts = 0;
+  do {
+    state.color = pick(palette);
+    attempts++;
+  } while (contrastRatio(state.color, state.bg) < 3 && attempts < 20);
+}
+
+function shuffle() {
+  sndShuffle();
+  randomizeStyle();
+  render();
+  playTextAnim();
+  spawnCritters();
+}
+
+/* ===== TEXT ANIMATION ===== */
+function playTextAnim() {
+  TEXT_ANIMS.forEach(a => displayText.classList.remove(a));
+  void displayText.offsetWidth; // reflow
+  displayText.classList.add(pick(TEXT_ANIMS));
+}
+
+/* ===== FLOATING CRITTERS (CHAOS MODE) ===== */
+let critterCount = 0;
+const MAX_CRITTERS = 80;
+
+function spawnCritters() {
+  const count = 12 + Math.floor(Math.random() * 18);
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      const r = Math.random();
+      if (r < 0.3) spawnImage();
+      else if (r < 0.6) spawnDogeText();
+      else spawnEmoji();
+    }, i * 60);
+  }
+}
+
+function chaosProps(el, size) {
+  const dur = 1.5 + Math.random() * 5;
+  const sx = Math.random() * window.innerWidth;
+  const sy = Math.random() * window.innerHeight;
+  const ex = sx + (Math.random() - 0.5) * 1600;
+  const ey = sy + (Math.random() - 0.5) * 1600;
+  const rot = (Math.random() - 0.5) * 2880;
+
+  el.style.setProperty('--size', size + 'px');
+  el.style.setProperty('--dur', dur + 's');
+  el.style.setProperty('--sx', sx + 'px');
+  el.style.setProperty('--sy', sy + 'px');
+  el.style.setProperty('--ex', ex + 'px');
+  el.style.setProperty('--ey', ey + 'px');
+  el.style.setProperty('--rot', rot + 'deg');
+  el.classList.add(pick(CHAOS_ANIMS));
+}
+
+function addCritter(el) {
+  if (critterCount >= MAX_CRITTERS) return;
+  critterCount++;
+  if (Math.random() < 0.4) sndPop();
+  document.body.appendChild(el);
+  el.addEventListener('animationend', () => { el.remove(); critterCount--; });
+  setTimeout(() => { if (el.parentNode) { el.remove(); critterCount--; } }, 15000);
+}
+
+function spawnEmoji() {
+  const el = document.createElement('div');
+  el.className = 'critter emoji';
+  el.textContent = pick(CRITTER_EMOJI);
+  chaosProps(el, 50 + Math.floor(Math.random() * 150));
+  addCritter(el);
+}
+
+function spawnDogeText() {
+  const el = document.createElement('div');
+  el.className = 'critter doge-text';
+  el.textContent = pick(DOGE_WORDS);
+  el.style.color = pick(DOGE_COLORS);
+  chaosProps(el, 28 + Math.floor(Math.random() * 72));
+  addCritter(el);
+}
+
+function spawnImage() {
+  const el = document.createElement('img');
+  el.className = 'critter img';
+  el.crossOrigin = 'anonymous';
+  el.src = pick(MEME_IMGS);
+  el.alt = '';
+  el.onerror = () => { el.remove(); critterCount--; };
+  chaosProps(el, 80 + Math.floor(Math.random() * 200));
+  addCritter(el);
+}
+
+/* ===== AUTO-FIT (always max size) ===== */
+function autoFitText() {
+  const maxH = window.innerHeight * 0.92;
+  const maxW = window.innerWidth * 0.94;
+
+  cursor.style.display = 'none';
+  displayText.style.width = maxW + 'px';
+
+  let lo = 10, hi = 800;
+  while (hi - lo > 2) {
+    const mid = Math.floor((lo + hi) / 2);
+    displayText.style.fontSize = mid + 'px';
+    if (displayText.scrollHeight > maxH) hi = mid;
+    else lo = mid;
+  }
+
+  displayText.style.fontSize = lo + 'px';
+  displayText.style.width = '';
+  cursor.style.display = '';
+  cursor.style.height = (lo * 0.9) + 'px';
+}
+
+/* ===== RENDER ===== */
+function render() {
+  if (state.text) {
+    displayText.childNodes.forEach(n => { if (n !== cursor) n.remove(); });
+    displayText.insertBefore(document.createTextNode(state.text), cursor);
+    displayText.classList.remove('placeholder');
+    displayText.style.fontFamily = state.font;
+    displayText.style.color = state.color;
+  } else {
+    displayText.childNodes.forEach(n => { if (n !== cursor) n.remove(); });
+    displayText.insertBefore(document.createTextNode('Just start typing...'), cursor);
+    displayText.classList.add('placeholder');
+    displayText.style.fontFamily = '"Comic Sans MS", cursive';
+    displayText.style.color = '';
+  }
+
+  display.style.background = state.bg;
+  document.documentElement.style.setProperty('--color', state.color);
+  document.documentElement.style.setProperty('--neon-glow', state.color);
+
+  displayText.classList.remove('effect-wordart', 'effect-neon', 'effect-shadow', 'effect-outline');
+  if (state.text && state.effect !== 'none') {
+    displayText.classList.add('effect-' + state.effect);
+  }
+
+  if (state.text) {
+    autoFitText();
+  } else {
+    displayText.style.fontSize = '3rem';
+    cursor.style.height = '';
+  }
+
+  saveToURL();
+}
+
+/* ===== KEEP FOCUS ON HIDDEN INPUT ===== */
+function focusInput() { hiddenInput.focus(); }
+display.addEventListener('click', focusInput);
+document.addEventListener('click', focusInput);
+window.addEventListener('focus', focusInput);
+
+/* ===== SYNC HIDDEN INPUT → STATE ===== */
+hiddenInput.addEventListener('input', () => {
+  state.text = hiddenInput.value;
+  sndClick();
+  render();
+});
+
+/* ===== KEYBOARD SHORTCUTS ===== */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    shuffle();
+  } else if (e.key === 'Escape') {
+    e.preventDefault();
+    sndClear();
+    state.text = '';
+    hiddenInput.value = '';
+    render();
+  } else if (e.key === 'a' && (e.metaKey || e.ctrlKey)) {
+    e.preventDefault();
+    hiddenInput.select();
+  }
+});
+
+window.addEventListener('resize', () => { if (state.text) autoFitText(); });
+
+/* ===== INIT ===== */
+loadFromURL();
+hiddenInput.value = state.text;
+render();
+focusInput();
+</script>
+</body>
+</html>
